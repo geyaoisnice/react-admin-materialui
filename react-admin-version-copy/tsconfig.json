@@ -1,0 +1,36 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "plugins": [
+      {
+        "name": "typescript-plugin-css-modules", //控制到less文件的样式跳转，注意版本号，最好使用最新的
+        //使用3.4.0版本会出问题，使用5.0.1则可以正常跳转
+        "options": {
+          "customMatcher": ".(styl|css|scss|less|sass)$"
+        }
+      },
+    ],
+  },
+  "include": [
+    "src",
+    "less.types.d.ts"
+  ]
+}

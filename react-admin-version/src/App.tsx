@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useMemo } from 'react'
 import postgrestRestProvider, { IDataProviderConfig, defaultPrimaryKeys, defaultSchema } from '@raphiniert/ra-data-postgrest';
 import { Admin, CustomRoutes, Layout, LayoutProps, ListGuesser, Resource, fetchUtils, useCreatePath } from 'react-admin';
-import CategoryList from './ProductList/CategoryLayout';
 import { BrowserRouter, Route } from 'react-router-dom';
 import { Grid } from '@material-ui/core'
 import { Link } from 'react-router-dom';
@@ -9,10 +8,13 @@ import { Menu } from "antd"
 import axios from 'axios';
 import polyglotI18nProvider from 'ra-i18n-polyglot';
 import chineseMessages from '@haxqer/ra-language-chinese';
-import MaterialTypeLayout from './MaterialType/MaterialTypeLayout';
-import MaterialLayout from './Material/MaterialLayout';
-import StudentList from './Student/StudentList';
-import { StudentAdd } from './Student/StudentAdd';
+import SchoolList from './SchoolManage/schoollist';
+import { SchoolCreate } from './SchoolManage/schoolcreate';
+import { SchoolEdit } from './SchoolManage/schooledit';
+import ClassList from './ClassManage/classlist';
+import { ClassCreate } from './ClassManage/classcreate';
+import { TeacherAdd } from './TeacherMange/TeacherAdd';
+import TeacherList from './TeacherMange/TeacherList';
 const i18nProvider = polyglotI18nProvider(() => chineseMessages, 'zh');
 const config: IDataProviderConfig = {
   apiUrl: '/postgrest',
@@ -99,35 +101,30 @@ const App = (props: any) => {
   const items = useMemo<IMenuItem[]>(() => {
 
     let menuItems: IMenuItem[] = new Array<IMenuItem>();
-    // let categoryItem: IMenuItem = {
-    //   key: 'categoryman',
-    //   label: <Link to='/categoryman'>产品管理</Link>,
-    //   path: '/categoryman'
-    // }
-    // let materialTypeItem: IMenuItem = {
-    //   key: 'materialtype',
-    //   label: <Link to='/materialtype'>物料类型管理</Link>,
-    //   path: '/materialtype'
-    // }
-    // let materialItem: IMenuItem = {
-    //   key: 'materiallist',
-    //   label: <Link to='/materiallist'>物料管理</Link>,
-    //   path: '/materiallist'
-    // }
+
     let item: IMenuItem = {
       key: 'home',
-      label: '功能测试',
+      label: '歌谣学校管理系统',
       children: new Array<IMenuItem>(),
     }
-    // item.children!.push(categoryItem);
-    // item.children!.push(materialTypeItem);
-    // item.children!.push(materialItem);
-    let studentItem: IMenuItem = {
-      key: 'studentman',
-      label: <Link to='/studentman'>学生管理</Link>,
-      path: '/studentman'
+    let schoolItem: IMenuItem = {
+      key: 'schgeyao',
+      label: <Link to='/schgeyao'>学校管理</Link>,
+      path: '/schgeyao'
     }
-    item.children!.push(studentItem);
+    let classItem: IMenuItem = {
+      key: 'classgeyao',
+      label: <Link to='/classgeyao'>班级管理</Link>,
+      path: '/classgeyao'
+    }
+    let teacherItem: IMenuItem = {
+      key: 'teachergeyao',
+      label: <Link to='/teachergeyao'>教师管理</Link>,
+      path: '/teachergeyao'
+    }
+    item.children!.push(schoolItem);
+    item.children!.push(classItem)
+    item.children!.push(teacherItem);;
     menuItems.push(item);
     return menuItems;
   }, [])
@@ -148,19 +145,21 @@ const App = (props: any) => {
               : null
           }
         </div>
+
         <div style={{ flexGrow: 1 }}>
           <Admin
             dataProvider={dataProvider}
             layout={appLayout}
             i18nProvider={i18nProvider}
           >
-            {/* <Resource name='t_prod_style' list={ListGuesser} /> */}
-            <Resource name='t_geyao_student' create={StudentAdd} list={ListGuesser} />
+
+            <Resource name='t_geyao_school' recordRepresentation="school_name" create={SchoolCreate} list={ListGuesser} edit={SchoolEdit} />
+            <Resource name='t_geyao_class' recordRepresentation="class_name" create={ClassCreate} list={ListGuesser} />
+            <Resource name='t_geyao_teacher' create={TeacherAdd} list={ListGuesser} />
             <CustomRoutes>
-              <Route path="studentman/*" element={<StudentList />} />
-              {/* <Route path="categoryman/*" element={<CategoryList />} />
-              <Route path="materialtype/*" element={<MaterialTypeLayout />} />
-              <Route path="materiallist/*" element={<MaterialLayout />} /> */}
+              <Route path="schgeyao/*" element={<SchoolList />} />
+              <Route path="classgeyao/*" element={<ClassList />} />
+              <Route path="teachergeyao/*" element={<TeacherList />} />
             </CustomRoutes>
           </Admin>
         </div>
