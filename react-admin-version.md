@@ -1,17 +1,15 @@
-# 20230823
-----创建学校表
-CREATE table t_geyao_school (
-  school_name VARCHAR(45) not null,
-  id SERIAL NOT NULL PRIMARY KEY
-)
+# react-admin-materialui
+后端：postgrest数据库
+前端：react-admin+material ui
 
----创建班级表 是指主外键关系---
-CREATE table t_geyao_class (
-  school_id INTEGER REFERENCES t_geyao_school (id),
-  class_name VARCHAR(45) not null,
-  id SERIAL NOT NULL PRIMARY KEY
-)
-# --备注---
+
+# react-admin-version 
+历史版本
+
+# react-admin-new 
+最新版本
+
+-----
 # 前言
 
 > 大家好 我是歌谣 今天继续给大家带来新的技术栈的实践利用的原理是我们的react-admin 创建一个项目 文件在react-admin-version
